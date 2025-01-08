@@ -150,7 +150,7 @@ pwa:
 paginate: 10
 
 # The base URL of your site
-baseurl: "https://blog.annyeong.one"
+baseurl: "https://annyeong.one"
 
 # ------------ The following options are not recommended to be modified ------------------
 
