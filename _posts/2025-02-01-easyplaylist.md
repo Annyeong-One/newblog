@@ -152,7 +152,7 @@ Freedom EP 수록; [유튜브 링크](https://www.youtube.com/watch?v=qrkCW7GZhl
 - 삭제의 클래식 곡들은 이미 위에서 많이 들려드렸기에 긴 설명은 않겠습니다. Piano Trio와 같은 형식을 가지고 있는, 좀 더 느리고 짧은 피스입니다. 피아노와 스트링이 같은 멜로디를 다른 속도와 같은 속도로 모두 들려주는 것이 인상깊습니다.
 
 ## ARForest - The Last Page
-BOFXV 투고: 총점 3위, 중앙값 5위, 평균값 5위; Lanota 외 다수 게임 수록; The Unfinished 수록; [유튜브 링크](http://youtube.com/watch?v=qfsonB9ZCk0&ab_channel=inukoro)
+BOFXV 투고: 총점 3위, 중앙값 5위, 평균값 5위; Lanota 외 다수 게임 수록; The Unfinished 수록; [유튜브 링크](https://youtube.com/watch?v=qfsonB9ZCk0&ab_channel=inukoro)
 - '알숲'이라는 애칭으로도 많이 불리는 한국 아티스트로, 주력 장르는 아트코어입니다. 우리나라에서 아트코어를 주력으로 쓰는 아티스트 중에서는 가장 유명합니다.
 - 따뜻한 분위기를 가지고 있는, 그럼에도 분위기를 점점 고조시켜서 곡의 마지막에 폭발시키는 그런 곡입니다. 
 - Suiren같은 곡에 비하면 절대적으로 짧은 2분 중반대의 곡이지만, 그래도 나름의 이야기와 서사를 가지고 있습니다.
