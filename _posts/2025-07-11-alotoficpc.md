@@ -204,4 +204,4 @@ bfs 돌려서 모든 정점에 대한 '그 정점으로부터 경로까지의 �
 
 요즘 셋을 돌 때는 대부분 solved.ac 디스코드의 문제-함께-풀기 채널의 `("Road to %d",max_rating+100)` 쓰레드에 내용을 올리고 있습니다. 이미 솔브드 디코에 가입되어 계신다면 [이쪽의 링크](https://discord.com/channels/857583541440348170/1388157392117829712)로 확인하실 수 있을 겁니다. 또, 요즘은 셋을 돌고 나서 일정을 시트에 기록해두고 있습니다. [이쪽](https://docs.google.com/spreadsheets/d/1GHCd_JE7tdTvM1kU8aa5xfCseaBWFLE7bA7Z1AViqto/edit?usp=sharing)에서 구경하실 수 있습니다.
 
-감사합니다.
+감사합니다. SCPC 1차가 이제 내일이 아니고 오늘이니, 자러 가야겠습니다.
