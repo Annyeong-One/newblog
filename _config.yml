@@ -120,14 +120,18 @@ comments:
   # Giscus options › https://giscus.app
   giscus:
     repo: Annyeong-One/newblog-giscus
-    repo_id: R_kgDONnfNVA
+    repo_id: R_kgDORag5Yw
     category: comments
-    category_id: DIC_kwDONnfNVM4Cl2CA
+    category_id: DIC_kwDORag5Y84C3V9o
     mapping: # optional, default to 'pathname'
     strict: # optional, default to '0'
     input_position: # optional, default to 'bottom'
     lang: ko
-    reactions_enabled: 0
+    reactions_enabled: 1
+    emit-metadata: 0
+    theme: preferred_color_scheme
+    
+    
 # Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets
 assets:
   self_host:
