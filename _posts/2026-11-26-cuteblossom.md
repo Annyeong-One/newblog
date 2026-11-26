@@ -48,9 +48,9 @@ PS적으로 강의가 크게 도움이 되지 않을 겁니다. 어려운 그래
 
 그래프에서 정점이 사람을, 간선이 친구 관계를 나타낸다고 생각합시다. 이때 몇 명의 사람들을 친구인 사람들끼리 둘씩 짝지어주는 것을 생각할 수 있습니다. 이것을 matching(매칭)이라고 합니다. 형식적으로 정의하자면 $G=(V,E)$에서 $M\subset E$가 $(a,b), (a,c) \in M$ for some $a, b, c\in V$인 경우가 없다면 $M$을 매칭이라고 합니다.
 
-당연히 짝을 지어줄 때는 짝이 없는 사람이 되도록 적게 하는 것이 좋겠죠? 그래프가 주어지면 $|M|$이 최대가 되는 매칭 $M$을 구하는 문제를 Maximum Matching Problem, 혹은 그냥 Matching Problem이라고 합니다. 오늘 저희가 해결할 문제는 바로 이 문제입니다.
+당연히 짝을 지어줄 때는 짝이 없는 사람이 되도록 적게 하는 것이 좋겠죠? 그래프가 주어지면 $\|M\|$이 최대가 되는 매칭 $M$을 구하는 문제를 Maximum Matching Problem, 혹은 그냥 Matching Problem이라고 합니다. 오늘 저희가 해결할 문제는 바로 이 문제입니다.
 
-**여기서부터는 그래프 $G=(V,E)$가 주어져 있다고 생각합시다.** 정의상 정점 개수를 $|V|$, 간선 개수를 $|E|$로 써야 하지만, 대충 $V$와 $E$로 쓸 테니 대충 알아먹으시면 되겠습니다.
+**여기서부터는 그래프 $G=(V,E)$가 주어져 있다고 생각합시다.** 정의상 정점 개수를 $\|V\|$, 간선 개수를 $\|E\|$로 써야 하지만, 대충 $V$와 $E$로 쓸 테니 대충 알아먹으시면 되겠습니다.
 
 ![매칭을 설명하는 예시 그래프](/assets/images/graph.png)
 *Fig. 1. 적당한 그래프를 하나 그려봤습니다. 당분간 이 그래프를 예시로 씁시다.*
@@ -59,6 +59,7 @@ PS적으로 강의가 크게 도움이 되지 않을 겁니다. 어려운 그래
 다음의 정의는 그렇게 엄밀한 정의는 아니지만 이해하는 데 문제는 없을 것입니다.
 - $G$에서 매칭 $M \subset E$가 주어졌다고 합시다. 어떤 path나 cycle $P$가, 그 간선이 $M$의 간선과 $E \setminus M$의 간선이 번갈아서 나오는 형태라면, $P$를 **alternating path/cycle** 이라고 부릅니다.
 - 어떤 alternating path $P$의 양 끝점이 둘 다 $M$에서 매칭되어 있지 않다면 그런 $P$를 ($M$-) **augmenting path** 라고 부릅니다. augmenting path의 양끝 정점을 **exposed vertex**라고 부릅니다.
+
 왜 정의했는지는 잘 모르겠지만 정의 자체는 직관적이지요?
 
 ![Alternating path와 augmenting path의 예시](/assets/images/alt_extend.png)
@@ -67,6 +68,7 @@ PS적으로 강의가 크게 도움이 되지 않을 겁니다. 어려운 그래
 오른쪽 위와 같이 alternating path가 주어지면, 그 양끝을 조금씩 늘리는 생각을 할 수 있습니다. 정점은 한정되어 있으니 더 이상 못 늘리는 상황이 올 텐데, 그런 경우는
 - 마지막으로 $M$ 간선을 지났는데 다른 간선이 하나도 없거나
 - 마지막으로 Non-$M$ 간선을 지났는데 거기 있는 다른 간선도 전부 Non-$M$인 경우입니다.
+
 전자는 저희에게 도움이 되지 않지만 후자는 꽤나 쓸모있습니다. 후자의 경우를 augmenting path라고 부른다고 생각하면 됩니다. 그려면 augmenting path 위에 있는 점들은 exposed vertices를 제외하면 모두 매칭에 포함되어 있는 점입니다. $M$ 간선이 $E\setminus M$ 간선보다 하나 적으니 간선의 개수는 홀수 개네요.
 
 augmenting path가 왜 우리에게 쓸모있는지 봅시다.
@@ -74,7 +76,7 @@ augmenting path가 왜 우리에게 쓸모있는지 봅시다.
 ![Augment 전후의 매칭](/assets/images/augm.png)
 *Fig. 3. augment 연산을 거치면 매칭의 크기가 1 늘어납니다.*
 
-augmenting path 위에 있던 간선들에 한해서, 원래 $M$-edge였던 것들을 non-$M$-edge로, non-$M$-edge였던 것들을 $M$-edge로 만들어봅시다. $|M|$이 정확히 $1$ 늘어났습니다! 즉, augmenting path를 찾을 수 있으면 매칭의 크기를 늘릴 수 있게 됩니다. 조금 더 엄밀히 쓰면 $\exists$ an augmenting path on $M$ 이면 $|M|$을 늘릴 수 있으므로 $M$ is not a maximum matching 이 성립합니다. 그 대우인 $M$ is a maximum matching → there are no augmenting path on $M$ 도 성립하겠지요.
+augmenting path 위에 있던 간선들에 한해서, 원래 $M$-edge였던 것들을 non-$M$-edge로, non-$M$-edge였던 것들을 $M$-edge로 만들어봅시다. $\|M\|$이 정확히 $1$ 늘어났습니다! 즉, augmenting path를 찾을 수 있으면 매칭의 크기를 늘릴 수 있게 됩니다. 조금 더 엄밀히 쓰면 $\exists$ an augmenting path on $M$ 이면 $\|M\|$을 늘릴 수 있으므로 $M$ is not a maximum matching 이 성립합니다. 그 대우인 $M$ is a maximum matching → there are no augmenting path on $M$ 도 성립하겠지요.
 
 ...그 역도 성립할까요?
 
@@ -85,13 +87,13 @@ augmenting path 위에 있던 간선들에 한해서, 원래 $M$-edge였던 것�
 
 **Theorem 1 (Petersen 1891).** **$M$ is a maximum matching IFF there are no augmenting path on $M$**
 
-‘augmenting path가 없으면 최대 매칭’ 부분만 증명해봅시다. 귀류법을 써서, 더 이상 augmenting path를 잡을 수 없는 매칭 $M$에 대해, $\exists M_\text{opt}$ s.t. $|M|<|M_\text{opt}|$이라 하고 $M\mathbin{\mathrm{xor}}M_\text{opt}$ 를 생각합시다. 간선의 대칭차집합을 취한다고 생각하면 됩니다.
+‘augmenting path가 없으면 최대 매칭’ 부분만 증명해봅시다. 귀류법을 써서, 더 이상 augmenting path를 잡을 수 없는 매칭 $M$에 대해, $\exists M_\text{opt}$ s.t. $\|M\|<\|M_\text{opt}\|$이라 하고 $M\mathbin{\mathrm{xor}}M_\text{opt}$ 를 생각합시다. 간선의 대칭차집합을 취한다고 생각하면 됩니다.
 
 원래 $M$에 있던 간선은 빨간색, $M_\text{opt}$에 있던 간선은 파란색으로 그립시다. 그러면 모든 정점에 대해 빨간 간선이나 파란 간선이 두 개 이상 붙어있을 수는 없지요(우린 그런 것은 매칭이라 부르지 않기로 했으니까요)?
 
 그렇다면 $(V, M\mathbin{\mathrm{xor}}M_\text{opt})$는 모든 정점의 degree가 $2$ 이하인 그래프입니다. 이러한 그래프는 disjoint한 path와 cycle으로만 이루어져 있음을 어렵지 않게 확인할 수 있습니다. 특히, 같은 색의 간선의 연속해서 나올 수 없으므로, 이 그래프는 alternating path/cycle으로만 이루어져 있으며, 특히 그중 alternating cycle의 크기는 전부 $4$ 이상의 짝수입니다.
 
-여기서, $|M|<|M_\text{opt}|$이므로 파란 간선이 더 많이 있는 component가 적어도 하나는 있어야 합니다. alternating cycle은 크기가 짝수이므로 두 색깔 간선의 개수 차이가 없고, 그렇다면 파란 간선이 하나 더 많은 alternating path가 하나 있어야겠네요.
+여기서, $\|M\|<\|M_\text{opt}\|$이므로 파란 간선이 더 많이 있는 component가 적어도 하나는 있어야 합니다. alternating cycle은 크기가 짝수이므로 두 색깔 간선의 개수 차이가 없고, 그렇다면 파란 간선이 하나 더 많은 alternating path가 하나 있어야겠네요.
 
 이때, 이 간선은 $M$에 대한 augmenting path입니다. $M$에는 augmenting path가 없으므로 모순입니다.
 
@@ -115,6 +117,7 @@ augmenting path 위에 있던 간선들에 한해서, 원래 $M$-edge였던 것�
 ### Prerequisites
 - [Bipartite graphs](https://en.wikipedia.org/wiki/Bipartite_graph)
 - [Vertex covers](https://en.wikipedia.org/wiki/Vertex_cover)
+
 버텍스 커버란, 엄밀성을 포기하고 간단히 설명명하면, 그래프의 모든 간선에 대해 간선의 양끝점 중 하나 이상이 커버에 속하게 되는 정점 집합을 말합니다. 모든 정점을 고르면 당연히 버텍스 커버가 되기 때문에, 그래프 이론에서는 최소 버텍스 커버를 잡는 문제를 많이 연구합니다.
 
 매칭 문제와 커버 문제는 서로 관련이 아주 많은 문제입니다. 임의의 그래프에서 최대 매칭의 크기보다 최소 버텍스 커버의 크기가 크거나 같으며, 특히 이분 그래프에서는 최대 매칭의 크기과 최소 버텍스 커버의 크기가 정확히 같음을 증명할 수 있습니다. 이것이 쾨닉의 정리(Kőnig's Theorem)입니다. 아래에서 쾨닉의 정리를 증명합니다.
@@ -152,21 +155,21 @@ calculates the Bipartite Matching in $O(VE)$
 
 $A\cup (U\setminus B)$으로 커버되지 않는 간선이 없음을 보이면 됩니다. 그렇다면 한쪽 끝은 $B$에 있고 반대쪽 끝은 $V\setminus A$에 있어야 합니다. 그런 정점이 있었으면 알고리즘이 끝나기 전 augmenting path가 찾아졌거나 포레스트에 추가되었어야 합니다. 즉 모든 간선을 $A\cup (U\setminus B)$으로 커버할 수 있으므로 $A\cup (U\setminus B)$는 유효한 버텍스커버입니다.
 
-**Lemma 3.2.2 (그 버텍스커버가 매칭과 크기가 같다).** When Algorithm 1 ends, $|A\cup (U\setminus B)| = |M|$.
+**Lemma 3.2.2 (그 버텍스커버가 매칭과 크기가 같다).** When Algorithm 1 ends, $\|A\cup (U\setminus B)\| = \|M\|$.
 
-이때, $|A|$는 지금 보고 있는 헝가리안 포레스트에서 매칭의 크기와 같습니다. $U\setminus B$에 있는 것을 보면, $U$에 있는 것 중 매칭에 안 나타나는 것들은 정의상 $B$에 들어간 채로 초기화되므로 $U\setminus B$의 정점은 모두 매칭에 포함된 정점들입니다. 그 상대가 $A$였다면 우리의 포레스트에 등장했을 테니 모든 상대는 $V\setminus A$에 있습니다. 둘을 합하면 $B$에 있는 정점들은 exposed vertex를 제외하고 전부 매칭되어 있으므로, $|A\cup (U\setminus B)| = |M|$입니다.
+이때, $\|A\|$는 지금 보고 있는 헝가리안 포레스트에서 매칭의 크기와 같습니다. $U\setminus B$에 있는 것을 보면, $U$에 있는 것 중 매칭에 안 나타나는 것들은 정의상 $B$에 들어간 채로 초기화되므로 $U\setminus B$의 정점은 모두 매칭에 포함된 정점들입니다. 그 상대가 $A$였다면 우리의 포레스트에 등장했을 테니 모든 상대는 $V\setminus A$에 있습니다. 둘을 합하면 $B$에 있는 정점들은 exposed vertex를 제외하고 전부 매칭되어 있으므로, $\|A\cup (U\setminus B)\| = \|M\|$입니다.
 
-**Lemma 3.2.3 (Weak duality of matching and vertex covers).** Given any $G=(V,E)$, (not necessarily bipartite,) $|M|\leq|C|\quad\forall M, C$ a matching and a cover.
+**Lemma 3.2.3 (Weak duality of matching and vertex covers).** Given any $G=(V,E)$, (not necessarily bipartite,) $\|M\|\leq\|C\|\quad\forall M, C$ a matching and a cover.
 
-어떤 $M$에 대해, $C$가 $M$의 모든 간선을 cover해야 합니다. $M$의 모든 간선은 pairwise vertex-disjoint하므로, 각 $M$의 양끝 점 중 적어도 하나가 $C$에 포함되어야 합니다. 따라서 $|M|\leq|C|$입니다.
+어떤 $M$에 대해, $C$가 $M$의 모든 간선을 cover해야 합니다. $M$의 모든 간선은 pairwise vertex-disjoint하므로, 각 $M$의 양끝 점 중 적어도 하나가 $C$에 포함되어야 합니다. 따라서 $\|M\|\leq\|C\|$입니다.
 
 **Theorem 2.** When Algorithm 1 ends, $M$ is a maximum matching.
 
 그러면 증명이 끝나는데, 매칭이 커버보다 작거나 같아야 하고 그 등호를 찾았으므로 당연히 우리가 찾은 매칭은 최대이고 이때의 커버는 최소입니다.
 
-사실 이분 그래프에서는 $\max|M|=\min|C|$가 성립하며, 이를 쾨닉의 정리라고 합니다. 이는 여러 가지 방법으로 증명할 수 있는데, 위에 제시한 Algorithm 1이 곧 그러한 $M$과 $C$를 찾는 올바른 알고리즘임을 보였으니 이것도 유효한 증명이 되겠습니다. 즉, 바로 아래의 따름정리를 주장할 수 있습니다.
+사실 이분 그래프에서는 $\max\|M\|=\min\|C\|$가 성립하며, 이를 쾨닉의 정리라고 합니다. 이는 여러 가지 방법으로 증명할 수 있는데, 위에 제시한 Algorithm 1이 곧 그러한 $M$과 $C$를 찾는 올바른 알고리즘임을 보였으니 이것도 유효한 증명이 되겠습니다. 즉, 바로 아래의 따름정리를 주장할 수 있습니다.
 
-**Corollary 3.2.1 ([Kőnig 1931](https://en.wikipedia.org/wiki/K%C5%91nig%27s_theorem_(graph_theory))).** Given any bipartite graph $G$, $\max|M|=\min|C|$.
+**Corollary 3.2.1 ([Kőnig 1931](https://en.wikipedia.org/wiki/K%C5%91nig%27s_theorem_(graph_theory))).** Given any bipartite graph $G$, $\max\|M\|=\min\|C\|$.
 
 증명을 완료했으니 시간복잡도에 대해 논의하자면, Algorithm 1은 augmenting path를 하나 찾는 데 $O(E)$ 시간이 걸립니다. 매칭의 크기는 커봤자 $O(V)$이니, 위 알고리즘은 $O(VE)$ 정도에 동작할 것입니다. 잘 알려진 Ford-Fulkerson 1956과 같은 시복이지만, 구현하기는 조금 더 복잡해 보입니다.
 
@@ -183,23 +186,23 @@ $A\cup (U\setminus B)$으로 커버되지 않는 간선이 없음을 보이면 �
 
 는 것을 보일 겁니다. 그러면 길이를 조금씩 늘려가면서 (BFS를 해주면 저건 자동으로 되겠죠?) 한 길이당 augment 한 번을 하면 $O(E\sqrt{V})$가 되겠습니다. 2번은 1번이 된다면 어렵지 않게 보일 수 있을 거 같은데, 1이랑 3은 별로 안 간단해 보입니다.
 
-**Lemma 3.3.1 ($|M|$이 작으면 min augmenting path도 짧다).** Suppose $G$ has max. matching of size $X$. For a matching $M\subset E(G)$, if $|M|<X$, $\exists$ an augm. path of length at most $2[\frac{|M|}{X-|M|}]+1$.
+**Lemma 3.3.1 ($\|M\|$이 작으면 min augmenting path도 짧다).** Suppose $G$ has max. matching of size $X$. For a matching $M\subset E(G)$, if $\|M\|<X$, $\exists$ an augm. path of length at most $2[\frac{\|M\|}{X-\|M\|}]+1$.
 
-증명을 위해 Petersen 1891의 construction을 한 번 더 가져옵시다. $|M^{\prime}|=X$인 매칭 $M^{\prime}$을 가져와서 $M\mathbin{\mathrm{xor}}M^{\prime}$을 생각하면, $M^{\prime}$-edge가 하나 더 많은 alternating path (즉 $M$-augmenting path)가 $X-|M|$개는 나와야 합니다. $M$-edge는 $|M|$개니까, 가장 짧은 augmenting path는 길어봤자 $M$-edge $\frac{|M|}{X-|M|}$개로 이루어져 있으며, 그 길이가 최대 $2[\frac{|M|}{X-|M|}]+1$임은 자명합니다.
+증명을 위해 Petersen 1891의 construction을 한 번 더 가져옵시다. $\|M^{\prime}\|=X$인 매칭 $M^{\prime}$을 가져와서 $M\mathbin{\mathrm{xor}}M^{\prime}$을 생각하면, $M^{\prime}$-edge가 하나 더 많은 alternating path (즉 $M$-augmenting path)가 $X-\|M\|$개는 나와야 합니다. $M$-edge는 $\|M\|$개니까, 가장 짧은 augmenting path는 길어봤자 $M$-edge $\frac{\|M\|}{X-\|M\|}$개로 이루어져 있으며, 그 길이가 최대 $2[\frac{\|M\|}{X-\|M\|}]+1$임은 자명합니다.
 
-**Lemma 3.3.2 (augmenting path는 길어진다).** Suppose $P$ is the shortest $M$-augmenting path, then for any $M\mathbin{\mathrm{xor}}P$-augmenting path $P^{\prime}$, $|P^{\prime}|\geq|P|+2|P\cap P^{\prime}|$.
+**Lemma 3.3.2 (augmenting path는 길어진다).** Suppose $P$ is the shortest $M$-augmenting path, then for any $M\mathbin{\mathrm{xor}}P$-augmenting path $P^{\prime}$, $\|P^{\prime}\|\geq\|P\|+2\|P\cap P^{\prime}\|$.
 
-$M$에서 찾은 augmenting path $P$에 대해 augment 연산을 $M\mathbin{\mathrm{xor}}P$로 표현했다고 생각하면 됩니다. 그렇다면 $M\mathbin{\mathrm{xor}}P$에서 새로운 augmenting path인 $P^{\prime}$를 찾았으므로, $P^{\prime}$도 augment한 매칭 $M^{\prime}$은 $M^{\prime}=M\mathbin{\mathrm{xor}}P\mathbin{\mathrm{xor}}P^{\prime}$라고 볼 수 있습니다. 그럼 $M^{\prime}$은 $M$에 augment 연산을 두 번 가한 매칭이므로 $|M^{\prime}|=|M|+2$입니다.
+$M$에서 찾은 augmenting path $P$에 대해 augment 연산을 $M\mathbin{\mathrm{xor}}P$로 표현했다고 생각하면 됩니다. 그렇다면 $M\mathbin{\mathrm{xor}}P$에서 새로운 augmenting path인 $P^{\prime}$를 찾았으므로, $P^{\prime}$도 augment한 매칭 $M^{\prime}$은 $M^{\prime}=M\mathbin{\mathrm{xor}}P\mathbin{\mathrm{xor}}P^{\prime}$라고 볼 수 있습니다. 그럼 $M^{\prime}$은 $M$에 augment 연산을 두 번 가한 매칭이므로 $\|M^{\prime}\|=\|M\|+2$입니다.
 
-이번에도 $M\mathbin{\mathrm{xor}}M^{\prime}$을 생각하면, 거기서 $M$-augmenting path를 두 개 찾을 수 있어야 합니다. $P$는 정의상 $M$-augmenting path 중 가장 짧으니까 $|M\mathbin{\mathrm{xor}}M^{\prime}| \geq 2|P|$입니다. 그런데 여기서, $M^{\prime}=M\mathbin{\mathrm{xor}}P\mathbin{\mathrm{xor}}P^{\prime}$에 의해 $M\mathbin{\mathrm{xor}}M^{\prime}=P\mathbin{\mathrm{xor}}P^{\prime}$입니다. 즉, $|M\mathbin{\mathrm{xor}}M^{\prime}|=|P\mathbin{\mathrm{xor}}P^{\prime}|=|P|+|P^{\prime}|-2|P\cap P^{\prime}|$이 되고, 식을 잘 정리하면 $|P^{\prime}|\geq|P|+2|P\cap P^{\prime}|$를 얻습니다.
+이번에도 $M\mathbin{\mathrm{xor}}M^{\prime}$을 생각하면, 거기서 $M$-augmenting path를 두 개 찾을 수 있어야 합니다. $P$는 정의상 $M$-augmenting path 중 가장 짧으니까 $\|M\mathbin{\mathrm{xor}}M^{\prime}\| \geq 2\|P\|$입니다. 그런데 여기서, $M^{\prime}=M\mathbin{\mathrm{xor}}P\mathbin{\mathrm{xor}}P^{\prime}$에 의해 $M\mathbin{\mathrm{xor}}M^{\prime}=P\mathbin{\mathrm{xor}}P^{\prime}$입니다. 즉, $\|M\mathbin{\mathrm{xor}}M^{\prime}\|=\|P\mathbin{\mathrm{xor}}P^{\prime}\|=\|P\|+\|P^{\prime}\|-2\|P\cap P^{\prime}\|$이 되고, 식을 잘 정리하면 $\|P^{\prime}\|\geq\|P\|+2\|P\cap P^{\prime}\|$를 얻습니다.
 
-그러면 ($2|P\cap P^{\prime}|\geq0$이긴 할 테니) $|P^{\prime}|\geq|P|$도 성립합니다. 즉, 가장 짧은 augmenting path를 잡는 것만 반복하면 그 길이는 점점 길어집니다. 앞선 1번을 증명했습니다.
+그러면 ($2\|P\cap P^{\prime}\|\geq0$이긴 할 테니) $\|P^{\prime}\|\geq\|P\|$도 성립합니다. 즉, 가장 짧은 augmenting path를 잡는 것만 반복하면 그 길이는 점점 길어집니다. 앞선 1번을 증명했습니다.
 
 이제 3번을 보입시다.
 
-**Lemma 3.3.3 (길이가 같은 augmenting path는 disjoint하다).** Suppose, from Lemma 3.3.2, we augment the paths $P_1$, $P_2$, $\cdots$, $P_n$, in order. If $|P_i|=|P_j|$ for some $i<j$, then $P_i\cap P_j=\emptyset$.
+**Lemma 3.3.3 (길이가 같은 augmenting path는 disjoint하다).** Suppose, from Lemma 3.3.2, we augment the paths $P_1$, $P_2$, $\cdots$, $P_n$, in order. If $\|P_i\|=\|P_j\|$ for some $i<j$, then $P_i\cap P_j=\emptyset$.
 
-$P_i$와 $P_j$가 정점을 공유하도록 $(i,j)$를 고를 수 있다고 가정하고 모순을 끌어냅시다. 만약 $j=i+1$인 $(i,j)$를 고를 수 있다면, Lemma 3.3.2로부터 $|P_j|\geq|P_i|+2|P_i\cap P_j|$이고 $2|P_i\cap P_j|>0$이므로 쉽게 모순을 얻습니다.
+$P_i$와 $P_j$가 정점을 공유하도록 $(i,j)$를 고를 수 있다고 가정하고 모순을 끌어냅시다. 만약 $j=i+1$인 $(i,j)$를 고를 수 있다면, Lemma 3.3.2로부터 $\|P_j\|\geq\|P_i\|+2\|P_i\cap P_j\|$이고 $2\|P_i\cap P_j\|>0$이므로 쉽게 모순을 얻습니다.
 
 (사실은 정점을 공유하는 것보다 간선을 공유하는 것이 더 강한 조건이므로 $P_i\cap P_j\neq\emptyset$임이 자명하지는 않은데,
 - $P_i$와 $P_j$ 둘 다 augmenting path이고,
@@ -209,7 +212,7 @@ $P_i$와 $P_j$가 정점을 공유하도록 $(i,j)$를 고를 수 있다고 가�
 
 그러한 $(i,j)$를 잡을 수 없다면, 적당한 $(i,j)$를 잡았을 때 $i<k<j$인 모든 $k$에 대해 $P_k$가 $P_i$와도 $P_j$와도 정점을 공유하지 않아야 합니다. 그렇다는 것은 곧 $P_j$가 $M\mathbin{\mathrm{xor}}P_i$의 augmenting path이기도 해야 한다는 뜻이고, 같은 방법으로 둘을 xor해서 모순을 끌어낼 수 있습니다.
 
-**Lemma 3.3.4 (서로 다른 길이의 수는 $O(\sqrt{V})$다).** $|\lbrace |P_1|,|P_2|,\cdots,|P_n|\rbrace | \leq 2[\sqrt{n}]+2$ and $n\leq[V/2]$.
+**Lemma 3.3.4 (서로 다른 길이의 수는 $O(\sqrt{V})$다).** $\|\lbrace \|P_1\|,\|P_2\|,\cdots,\|P_n\|\rbrace \| \leq 2[\sqrt{n}]+2$ and $n\leq[V/2]$.
 
 얘는 쉬우니까 증명은 생략합니다. 따라서,
 
