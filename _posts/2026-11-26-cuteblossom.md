@@ -209,6 +209,7 @@ $P_i$와 $P_j$가 정점을 공유하도록 $(i,j)$를 고를 수 있다고 가�
 - $P_i$와 $P_j$ 둘 다 augmenting path이고,
 - $P_i$를 augment한 직후 $P_j$를 augment할 테니 두 alternating path가 exposed vertex를 공유할 수는 없고, 그렇다면 중간에 있는 정점을 공유할 텐데,
 - 그러면 그 정점에 붙어 있는 유일한 $M_{i-1}\mathbin{\mathrm{xor}}P_i$-edge도 공유해야 합니다.
+
 따라서 간선을 공유합니다.)
 
 그러한 $(i,j)$를 잡을 수 없다면, 적당한 $(i,j)$를 잡았을 때 $i<k<j$인 모든 $k$에 대해 $P_k$가 $P_i$와도 $P_j$와도 정점을 공유하지 않아야 합니다. 그렇다는 것은 곧 $P_j$가 $M\mathbin{\mathrm{xor}}P_i$의 augmenting path이기도 해야 한다는 뜻이고, 같은 방법으로 둘을 xor해서 모순을 끌어낼 수 있습니다.
@@ -230,6 +231,7 @@ $P_i$와 $P_j$가 정점을 공유하도록 $(i,j)$를 고를 수 있다고 가�
 ### Prerequisites
 - [Edge Contraction](https://en.wikipedia.org/wiki/Edge_contraction)
 - [Lowest Common Ancestor](https://en.wikipedia.org/wiki/Lowest_common_ancestor)
+
 그래프가 주어졌을 때, 간선으로 이어져 있는 두 정점을 하나로 합치는 것을 생각할 수 있습니다. 그 과정에서 두 정점 중 하나 이상과 연결되어 있는 정점은 모두 새로운 정점이랑 이어주면 됩니다. 이것을 그 간선을 contract했다고 하며, 이를 edge contraction이라 부릅니다. 일종의 정점 homomorphism이라 생각할 수도 있겠습니다.
 
 ### Edmonds 1965 ([Edmond's Blossom Algorithm](https://en.wikipedia.org/wiki/Blossom_algorithm))
@@ -337,14 +339,16 @@ $\|B\|-\|A\|$의 값은 헝가리안 포레스트에서 루트의 개수와 같�
      - $(i,j)\in E$이고 $i<j$이면 변수 $x_{ij}$,
      - $(i,j)\in E$이고 $i>j$이면 $-x_{ij}$,
      - $(i,j)\notin E$이면 $0$
-   으로 둔 $V \times V$의skew-symmetric 행렬입니다. 이때, 이 행렬의 rank가 무조건 $G$의 최대 매칭의 크기의 두 배가 됨이 알려져 있습니다. 따라서 각 변수를 랜덤한 정수로 두고 가우스 소거법 같은 것을 써서 행렬의 rank를 구하면 이 값의 절반이 높은 확률로 최대 매칭의 크기와 같으며, 블라썸을 몰라도 이것을 기억하고 있으면 주어진 그래프의 최대 매칭의 크기 정도는 어렵지 않게 구할 수 있습니다.
+    으로 둔 $V \times V$의skew-symmetric 행렬입니다. 이때, 이 행렬의 rank가 무조건 $G$의 최대 매칭의 크기의 두 배가 됨이 알려져 있습니다. 따라서 각 변수를 랜덤한 정수로 두고 가우스 소거법 같은 것을 써서 행렬의 rank를 구하면 이 값의 절반이 높은 확률로 최대 매칭의 크기와 같으며, 블라썸을 몰라도 이것을 기억하고 있으면 주어진 그래프의 최대 매칭의 크기 정도는 어렵지 않게 구할 수 있습니다.
 6. Mucha & Sankowski 2004는 Tutte Matrix에서 매칭에 포함되는 간선을 얻어낼 수 있음을 보였고, Harvey 2009가 실제로 이를 구하는 알고리즘을 제시했습니다. 역행렬을 구하거나 행렬 곱셈을 구하는 것의 SOTA는 Alman-Duan-Williams-Xu-Xu-Zhou 2024에 의해 $O(N^{2.371})$ 정도이므로 $O(V^{2.371})$에 최대 매칭을 구할 수 있으며, Dense graph에서는 앞선 $O(E\sqrt{V})=O(V^{2.5})$보다 이쪽이 더 빠릅니다. Dense graph에서 현재 알려진 SOTA는 이쪽입니다. 다만 PS의 범위에서는 슈트라센 알고리즘 (Strassen 1969)이 훨씬 빠르고 그것보다 Gabow 2017이 더 빠르므로 PS를 할 때 이쪽을 구현할 일은 없습니다.
 
 ## 부록 A. Graphs, Trees, Forests
 그래프를 형식적으로 정의하면 다음과 같습니다.
+
 $$
 G:=(V,E)
 $$
+
 여기서 $V$는 vertex 집합, $E$는 edge 집합입니다. 이때 edge는 보통 unordered pair of vertices $(a,b)$ s.t. $a\neq b; a, b \in V$로 정의합니다. **오늘은 $E$가 multiset인 경우나 $a=b$인 경우를 생각하지 않습니다.**
 
 path는 한 정점을 여러 번 방문하지 않으면서 간선을 몇 번 따라가서 얻는 경로를 의미합니다. 시작점과 종점이 같으며 나머지 정점은 여러 번 방문하지 않는다면 이는 cycle입니다.
@@ -360,9 +364,11 @@ path는 한 정점을 여러 번 방문하지 않으면서 간선을 몇 번 따
 트리에서 두 정점의 Lowest Common Ancestor는 두 정점 모두의 조상인 정점 중 가장 루트로부터 멀리 떨어진 정점입니다.
 
 이분 그래프는 일반적으로 다음과 같이 정의하며,
+
 $$
 G:=(U\cup V,E)
 $$
+
 이때 모든 간선은 $u \in U$와 $v \in V$를 이어야 합니다. 즉, $U$와 $V$는 각각 그 안에 간선이 없어야 합니다. 사실 정점 집합이 어떻게 주어지든간에 위의 정의에 맞게 정점을 $U$와 $V$로 나눌 수 있으면 이분 그래프라고 부릅니다.
 
 이때 주어진 그래프가 이분 그래프인 것과 이 그래프가 홀수 사이클을 가지지 않음이 필요충분입니다.
